@@ -59,36 +59,53 @@ Socket programming finds applications in various domains, including web developm
 ```python
 import socket
 from datetime import datetime
-s=socket.socket()
-s.bind(('localhost',8000))
+
+s = socket.socket()
+s.bind(('localhost', 8000))  # Bind the server to port 8000
 s.listen(5)
-c,addr=s.accept()
-print("Client Address : ",addr)
+
+print("Server is listening on port 8000...")
+
+c, addr = s.accept()  # Accept client connection
+print("Client Address:", addr)
+
 now = datetime.now()
-c.send(now.strftime("%d/%m/%Y %H:%M:%S").encode())
-ack=c.recv(1024).decode()
+c.send(now.strftime("%d/%m/%Y %H:%M:%S").encode())  # Send date & time
+
+ack = c.recv(1024).decode()  # Receive acknowledgment
 if ack:
- print(ack)
+    print("Client:", ack)
+
 c.close()
+
 ```
 
 ### Client
 ```python
 import socket
-s=socket.socket()
-s.connect(('localhost',8000))
-print(s.getsockname())
-print(s.recv(1024).decode())
-s.send("acknowledgement recived from the server".encode())
+
+s = socket.socket()
+s.connect(('localhost', 8000))  # Connect to server
+
+print("Client Address:", s.getsockname())
+
+msg = s.recv(1024).decode()  # Receive message from server
+print("Server:", msg)
+
+s.send("Acknowledgment received from the client.".encode())  # Send acknowledgment
+
+s.close()
+
 ```
 
 ## Output
 
 ### Client
-![alt text](<Screenshot 2024-08-21 153125.png>)
+![image](https://github.com/user-attachments/assets/498f705e-0a91-4021-9f65-20747a7386c4)
 
 ### Server
-![alt text](<Screenshot 2024-08-21 153206.png>)
+![image](https://github.com/user-attachments/assets/bcf1e79f-4863-4e77-882f-ca84ffd0bdd8)
+
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully
